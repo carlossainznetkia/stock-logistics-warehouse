@@ -4,10 +4,10 @@
 from odoo.tests import common
 
 
-class TestStockPickingMTO(common.SavepointCase):
+class TestStockPickingMTO(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestStockPickingMTO, cls).setUpClass()
+        super().setUpClass()
         cls.mto_route = cls.env.ref("stock.route_warehouse0_mto")
         cls.product = cls.env["product.product"].create(
             {
@@ -33,7 +33,7 @@ class TestStockPickingMTO(common.SavepointCase):
                 "location_src_id": cls.wh1.lot_stock_id.id,
                 "procure_method": "make_to_stock",
                 "picking_type_id": cls.wh1.int_type_id.id,
-                "location_id": cls.wh2.lot_stock_id.id,
+                "location_dest_id": cls.wh2.lot_stock_id.id,
                 "warehouse_id": cls.wh2.id,
                 "group_propagation_option": "propagate",
                 "propagate_cancel": True,
@@ -73,4 +73,4 @@ class TestStockPickingMTO(common.SavepointCase):
         self.assertFalse(self.picking.procure_method)
         # We set the procure method in the picking
         self.picking.procure_method = "make_to_order"
-        self.assertEqual(self.picking.move_lines[1].procure_method, "make_to_order")
+        self.assertEqual(self.picking.move_ids[1].procure_method, "make_to_order")
