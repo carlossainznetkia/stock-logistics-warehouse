@@ -13,7 +13,7 @@ class TestStockPickingMTO(common.TransactionCase):
             {
                 "name": "Test MTO Product",
                 "route_ids": [(6, 0, cls.mto_route.ids)],
-                "type": "product",
+                "type": "consu",
             }
         )
         cls.wh_obj = cls.env["stock.warehouse"]
